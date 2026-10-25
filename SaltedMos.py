@@ -30,19 +30,13 @@ ModListerEmbed = discord.Embed(
 def BuildModListerEmbed(interaction: discord.Interaction):
     Set_Modlist(interaction)
     ModListerEmbed.clear_fields()
-    ModListerEmbed.set_footer(text=f"{len(Modlist)} mods")
+    text = ""
     for Mod in Modlist:
-        ModListerEmbed.add_field(
-            name="",
-            value=f"`{Mod['Name']}` • [`Link`]({Mod['Link']})",
-            inline=False
-        )
-    if len(Modlist) == 0:
-        ModListerEmbed.add_field(
-            name="",
-            value="Empty List",
-            inline=False
-        )
+        text += f"`{Mod['Name']}` • [`Link`]({Mod['Link']})\n"
+    if text == "":
+        text = "Empty List"
+    ModListerEmbed.description = text
+    ModListerEmbed.set_footer(text=f"{len(Modlist)} mods")
 async def modslist(interaction: discord.Interaction):
     BuildModListerEmbed(interaction)
 
@@ -51,17 +45,17 @@ HelperEmbed = discord.Embed(
     color=discord.Color.dark_theme()
 )
 HelperEmbed.add_field(
-    name="",
+    name="\u200b",
     value="`/modlist` • Show client-side mods",
     inline=False
 )
 HelperEmbed.add_field(
-    name="",
+    name="\u200b",
     value="`/help` • show commands",
     inline=False
 )
 HelperEmbed.add_field(
-    name="",
+    name="\u200b",
     value="`/add` • add mod from list `(Admin Only)`",
     inline=False
 )
@@ -72,7 +66,7 @@ HelperEmbed.add_field(
 )
 
 #events
-@Mos.event 
+@Mos.event
 async def on_ready():
     print(f"Logged into as {Mos.user}")
     for guild in Mos.guilds:
