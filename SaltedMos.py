@@ -79,6 +79,10 @@ async def on_ready():
         guild = discord.Object(id=guild.id)
         Mos.tree.copy_global_to(guild=guild)
         await Mos.tree.sync(guild=guild)
+@Mos.event
+async def on_guild_join(guild):
+    Mos.tree.copy_global_to(guild)
+    await Mos.tree.sync(guild=guild)
 
 #Commands
 @Mos.tree.command(name="modlist", description="List client-side mods")
